@@ -1,0 +1,24 @@
+<div id="platform-setting" class="container platform" [@settingState]="settingState">
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h3 class="panel-title">测测你的记忆力</h3>
+        </div>
+        <div class="panel-body">
+            <form class="form-inline" (submit)="init()">
+                <fieldset>
+                    <div id="setting-container">
+                        <p class="help-block text-left">你一次能记住几个数字？</p>
+                        <div class="form-group">
+                            <input [(ngModel)]="count" type="number" id="count" name="count" class="form-control"
+                                   min="1" max="1000" placeholder="请填写大于 0 的数字">
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-success">马 上 开 始</button>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
