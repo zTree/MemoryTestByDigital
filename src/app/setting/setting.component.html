@@ -4,17 +4,62 @@
             <h3 class="panel-title">测测你的记忆力</h3>
         </div>
         <div class="panel-body">
-            <form class="form-inline" (submit)="init()">
+            <form class="" (submit)="init()">
                 <fieldset>
                     <div id="setting-container">
-                        <p class="help-block text-left">你一次能记住几个数字？</p>
+                        <p class="help-block text-left">你一次能记住几个数字？(1-999)</p>
                         <div class="form-group">
-                            <input [(ngModel)]="count" type="number" id="count" name="count" class="form-control"
-                                   min="1" max="1000" placeholder="请填写大于 0 的数字">
+                            <h1 class="text-center"><span>{{count}}</span></h1>
+                            <input [value]="count" type="hidden" id="count" name="count">
                         </div>
 
                         <div class="form-group text-center">
-                            <button type="submit" class="btn btn-success">马 上 开 始</button>
+                            <div id="keyboard-setting" class="keyboard">
+                                <div class="container row">
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">7</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">8</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">9</button>
+                                    </div>
+                                </div>
+                                <div class="container row">
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">4</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">5</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">6</button>
+                                    </div>
+                                </div>
+                                <div class="container row">
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">1</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">2</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">3</button>
+                                    </div>
+                                </div>
+                                <div class="container row">
+                                    <div class="col-xs-4">
+                                        <button type="submit" class="btn btn-primary">开始</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-success">0</button>
+                                    </div>
+                                    <div class="col-xs-4">
+                                        <button type="button" class="btn btn-warning">删除</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </fieldset>

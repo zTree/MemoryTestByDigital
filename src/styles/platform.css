@@ -9,7 +9,16 @@
 }
 
 #platform-container {
+    max-width: 530px;
+}
+main .container {
     max-width: 500px;
+}
+.keyboard .container {
+    max-width: 100%;
+}
+.keyboard .row {
+    margin: 0;
 }
 
 #platform-setting {
@@ -21,4 +30,13 @@
 }
 #setting-container {
     /*display: inline-block;*/
+}
+
+
+.keyboard .btn {
+    margin: 10px auto;
+    width: 100%;
+}
+.keyboard .btn:focus {
+    outline: none;
 }

@@ -1,4 +1,8 @@
-import { Component, OnInit, animate, style, state, transition, trigger } from '@angular/core';
+import {
+    Component, OnInit,
+    OnChanges, SimpleChanges, Input, Output, EventEmitter,
+    animate, style, state, transition, trigger
+} from '@angular/core';
 
 @Component({
     // moduleId: module.id,
@@ -10,7 +14,7 @@ import { Component, OnInit, animate, style, state, transition, trigger } from '@
                 opacity: 0,
                 transform: 'scale(0)'
             })),
-            state('active',   style({
+            state('active', style({
                 opacity: 1,
                 transform: 'scale(1)'
             })),
@@ -20,11 +24,28 @@ import { Component, OnInit, animate, style, state, transition, trigger } from '@
     ],
 })
 export class SettingComponent implements OnInit {
-    public count: number;
+    @Output() public onSetCount = new EventEmitter();
     public settingState = 'inactive';
+    private _count: number;
+
+    get count(): number {
+        return this._count;
+    }
+    @Input('count')
+    set count(value: number) {
+        console.log('set count 1: ' + value + '====' + this._count);
+
+        // 当超出边界后，修正边界值，必须要修改当前值，否则无法修改 input 内的数据
+        if (value === this._count) {
+            return;
+        }
+        this._count = value;
+        this.onSetCount.emit(this.count);
+        console.log('set count 2: ' + value);
+    }
 
     constructor() {
-        this.count = 8;
+
     }
 
     public ngOnInit(): void {
