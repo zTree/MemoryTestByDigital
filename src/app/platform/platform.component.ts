@@ -8,12 +8,11 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 export class PlatformComponent implements OnInit, OnChanges {
     public count: number;
 
-    constructor() {
-        this.count = 8;
-    }
+    // constructor() {
+    // }
 
     public ngOnInit(): void {
-
+        this.count = 8;
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -33,15 +32,13 @@ export class PlatformComponent implements OnInit, OnChanges {
             count = this.count;
         }
 
-        if (count < 1) {
-            count = 1;
-        } else if (count > 999) {
-            count = 999;
+        if (count < 0 || count > 999) {
+            return;
         }
 
         this.count = count;
     }
 
-    public init(): void {
-    }
+    // public init(): void {
+    // }
 }

@@ -26,27 +26,28 @@ import {
 export class SettingComponent implements OnInit {
     @Output() public onSetCount = new EventEmitter();
     public settingState = 'inactive';
-    private _count: number;
+    @Input() public count: number;
+    private _countInput: number;
 
-    get count(): number {
-        return this._count;
-    }
-    @Input('count')
-    set count(value: number) {
-        console.log('set count 1: ' + value + '====' + this._count);
-
-        // 当超出边界后，修正边界值，必须要修改当前值，否则无法修改 input 内的数据
-        if (value === this._count) {
+    public inputCount(value: number) {
+        if (value < 0 && this.count === 0) {
             return;
         }
-        this._count = value;
-        this.onSetCount.emit(this.count);
-        console.log('set count 2: ' + value);
+
+        if (value < 0) {
+            this._countInput = Math.floor(this.count / 10);
+        // } else if (this.count > 99) {
+        //     this._countInput = (this.count % 100) * 10 + value;
+        } else {
+            this._countInput = this.count * 10 + value;
+        }
+
+        this.onSetCount.emit(this._countInput);
     }
 
-    constructor() {
-
-    }
+    // constructor() {
+    //
+    // }
 
     public ngOnInit(): void {
         setTimeout(() => {

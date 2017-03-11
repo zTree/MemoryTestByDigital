@@ -10,56 +10,10 @@
                         <p class="help-block text-left">你一次能记住几个数字？(1-999)</p>
                         <div class="form-group">
                             <h1 class="text-center"><span>{{count}}</span></h1>
-                            <input [value]="count" type="hidden" id="count" name="count">
                         </div>
 
                         <div class="form-group text-center">
-                            <div id="keyboard-setting" class="keyboard">
-                                <div class="container row">
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">7</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">8</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">9</button>
-                                    </div>
-                                </div>
-                                <div class="container row">
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">4</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">5</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">6</button>
-                                    </div>
-                                </div>
-                                <div class="container row">
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">1</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">2</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">3</button>
-                                    </div>
-                                </div>
-                                <div class="container row">
-                                    <div class="col-xs-4">
-                                        <button type="submit" class="btn btn-primary">开始</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-success">0</button>
-                                    </div>
-                                    <div class="col-xs-4">
-                                        <button type="button" class="btn btn-warning">删除</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <game-keyboard id="keyboard-setting" (onKeyDown)="inputCount($event)"></game-keyboard>
                         </div>
                     </div>
                 </fieldset>

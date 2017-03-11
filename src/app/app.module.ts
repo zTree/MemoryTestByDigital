@@ -18,6 +18,7 @@ import { APP_RESOLVER_PROVIDERS } from './app.resolver';
 import { AppState, InternalStateType } from './app.service';
 import { ROUTES } from './router/app.routes';
 import { AppComponent }  from './app.component';
+import { KeyboardComponent }  from './keyboard/keyboard.component';
 import { PlatformComponent }  from './platform/platform.component';
 import { SettingComponent }  from './setting/setting.component';
 
@@ -42,6 +43,7 @@ type StoreType = {
     ],
     declarations: [
         AppComponent,
+        KeyboardComponent,
         PlatformComponent,
         SettingComponent,
     ],

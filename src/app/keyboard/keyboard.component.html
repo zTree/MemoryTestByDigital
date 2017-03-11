@@ -1,0 +1,10 @@
+<div class="keyboard">
+    <div class="container row" *ngFor="let keyRow of keyList">
+        <div *ngFor="let key of keyRow">
+            <div class="col-xs-4" *ngIf="!key.isHide">
+                <button type="button" class="btn {{key.style || 'btn-success'}}" (click)="inputCount(key.value)" >{{key.text}}</button>
+            </div>
+        </div>
+    </div>
+
+</div>
