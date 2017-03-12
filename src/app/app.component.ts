@@ -5,7 +5,7 @@ import { CookieUtils } from './utils/cookieUtils';
   // moduleId: module.id,
   selector: 'my-app',
   templateUrl: './app.component.html',
-  styleUrls: ['../styles/platform.css'],
+  // styleUrls: ['../styles/platform.css'],
   providers: [CookieUtils]
 })
 export class AppComponent  {
