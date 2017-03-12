@@ -7,13 +7,17 @@
             <form class="" (submit)="init()">
                 <fieldset>
                     <div id="setting-container">
-                        <p class="help-block text-left">你一次能记住几个数字？(1-999)</p>
+                        <p class="help-block text-left">
+                            <span>你一次能记住几个数字？</span>
+                            <span class="bg-danger text-danger">（1-999）</span></p>
                         <div class="form-group">
-                            <h1 class="text-center"><span>{{count}}</span></h1>
+                            <h1 class="text-center {{count === 0 ? 'text-danger': 'text-info'}}"><span>{{count}}</span></h1>
                         </div>
 
                         <div class="form-group text-center">
-                            <game-keyboard id="keyboard-setting" (onKeyDown)="inputCount($event)"></game-keyboard>
+                            <game-keyboard id="keyboard-setting"
+                                           [disabledBtn]="disabledBtn"
+                                           (onKeyDown)="inputCount($event)"></game-keyboard>
                         </div>
                     </div>
                 </fieldset>

@@ -23,10 +23,12 @@ import {
         ])
     ],
 })
-export class SettingComponent implements OnInit {
+export class SettingComponent implements OnInit, OnChanges {
     @Output() public onSetCount = new EventEmitter();
-    public settingState = 'inactive';
+    @Output() public onSetGameActive = new EventEmitter();
     @Input() public count: number;
+    public settingState = 'inactive';
+    public disabledBtn = {};
     private _countInput: number;
 
     public inputCount(value: number) {
@@ -35,9 +37,15 @@ export class SettingComponent implements OnInit {
         }
 
         if (value < 0) {
+            // 删除键
             this._countInput = Math.floor(this.count / 10);
-        // } else if (this.count > 99) {
-        //     this._countInput = (this.count % 100) * 10 + value;
+            // } else if (this.count > 99) {
+            //     this._countInput = (this.count % 100) * 10 + value;
+        } else if (value == 99) {
+            // 开始 Game
+            this.settingState = 'inactive';
+            this.onSetGameActive.emit(true);
+            return;
         } else {
             this._countInput = this.count * 10 + value;
         }
@@ -53,6 +61,23 @@ export class SettingComponent implements OnInit {
         setTimeout(() => {
             this.settingState = 'active';
         }, 300);
+    }
+
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes['count']) {
+            // console.log('platform change count: ' + this.count);
+            if (this.count === 0) {
+                this.disabledBtn = {
+                    value: 99,
+                    disabled: true
+                };
+            } else {
+                this.disabledBtn = {
+                    value: 99,
+                    disabled: false
+                };
+            }
+        }
     }
 
     public init(): void {

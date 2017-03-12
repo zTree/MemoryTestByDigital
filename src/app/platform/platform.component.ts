@@ -5,24 +5,20 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
     selector: 'game-platform',
     templateUrl: 'platform.component.html',
 })
-export class PlatformComponent implements OnInit, OnChanges {
+export class PlatformComponent implements OnInit {
     public count: number;
+    public gameActive: boolean;
 
     // constructor() {
     // }
 
     public ngOnInit(): void {
         this.count = 8;
-    }
-
-    public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['count'].currentValue) {
-            console.log('platform change count: ' + this.count);
-        }
+        this.gameActive = false;
     }
 
     public changeCount(count: number): void {
-        console.log('platform -- ' + count + ' === ' + this.count);
+        console.log('platform -- ' + this.count + ' => ' + count);
         if (count === this.count) {
             return;
         }
@@ -37,6 +33,10 @@ export class PlatformComponent implements OnInit, OnChanges {
         }
 
         this.count = count;
+    }
+
+    public setGameActive(active) {
+        this.gameActive = !!active;
     }
 
     // public init(): void {

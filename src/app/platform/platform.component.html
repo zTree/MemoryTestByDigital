@@ -1,4 +1,12 @@
 <div id="platform-container" class="container">
     <!--<game-setting (onChangeCount)="changeCount($event)"></game-setting>-->
-    <game-setting (onSetCount)="changeCount($event)" [count]="count"></game-setting>
+    <game-setting
+        (onSetCount)="changeCount($event)"
+        (onSetGameActive)="setGameActive($event)"
+        [count]="count"></game-setting>
+    <game-main
+        (onSetCount)="changeCount($event)"
+        (onSetGameActive)="setGameActive($event)"
+        [count]="count"
+        [gameActive]="gameActive"></game-main>
 </div>

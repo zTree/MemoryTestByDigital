@@ -32,6 +32,9 @@ main .container {
     /*display: inline-block;*/
 }
 
+.keyboard .col-xs-4 {
+    padding: 0 8px;
+}
 
 .keyboard .btn {
     margin: 10px auto;

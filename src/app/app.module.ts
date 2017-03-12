@@ -21,6 +21,7 @@ import { AppComponent }  from './app.component';
 import { KeyboardComponent }  from './keyboard/keyboard.component';
 import { PlatformComponent }  from './platform/platform.component';
 import { SettingComponent }  from './setting/setting.component';
+import { GameComponent }  from './game/game.component';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -46,6 +47,7 @@ type StoreType = {
         KeyboardComponent,
         PlatformComponent,
         SettingComponent,
+        GameComponent
     ],
     providers: [ // expose our Services and Providers into Angular's dependency injection
         APP_PROVIDERS

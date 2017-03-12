@@ -23,9 +23,9 @@ import {
     //     ])
     // ],
 })
-export class KeyboardComponent implements OnInit {
+export class KeyboardComponent implements OnInit, OnChanges {
     @Output() public onKeyDown = new EventEmitter();
-    // @Input() public count: number;
+    @Input() public disabledBtn: any;
     // public settingState = 'inactive';
     public keyList = [
         [
@@ -45,22 +45,31 @@ export class KeyboardComponent implements OnInit {
         ],
         [
             {value: 99, text: '开始', style: 'btn-primary'},
-            {value: 9999, text: '完成', style: 'btn-primary', isHide: true},
+            {value: 9999, text: '完成', style: 'btn-primary', hidden: true},
             {value: 0, text: '0'},
             {value: -1, text: '删除', style: 'btn-warning'}
         ]
     ];
+    private keyMap = {};
+
+    constructor() {
+        for (let row of this.keyList) {
+            for (let btn of row) {
+                this.keyMap[btn.value] = btn;
+            }
+        }
+    }
 
     // 开始：99
     // 删除：-1
     // 完毕：9999
     // 其它：0-9
-    public inputCount(value: number) {
-        console.log('input: ' + value);
-        this.onKeyDown.emit(value);
+    public inputCount(btn: any) {
+        if (btn.disabled) {
+            return;
+        }
+        this.onKeyDown.emit(btn.value);
     }
-
-    // constructor() {}
 
     public ngOnInit(): void {
         // setTimeout(() => {
@@ -68,7 +77,12 @@ export class KeyboardComponent implements OnInit {
         // }, 300);
     }
 
-    public init(): void {
-        // this.settingState = 'inactive';
+    public ngOnChanges(changes: SimpleChanges): void {
+        if (changes['disabledBtn'].currentValue) {
+            let btn = changes['disabledBtn'].currentValue;
+            if (this.keyMap[btn.value]) {
+                this.keyMap[btn.value].disabled = btn.disabled;
+            }
+        }
     }
 }

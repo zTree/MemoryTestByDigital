@@ -1,0 +1,10 @@
+<div class="game-main-layer"  [@gameState]="gameState">
+    <div class="progress" *ngIf="isProcessActive">
+        <div class="progress-bar progress-bar-striped"
+             [ngClass]="{'active':isProcessActive}"
+             role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 10%"><span class="sr-only">45% Complete</span></div>
+    </div>
+    <div [ngClass]="{'active':isReady}">
+        深呼吸...马上开始！
+    </div>
+</div>
