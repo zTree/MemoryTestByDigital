@@ -1,5 +1,7 @@
 import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
+import { CookieUtils }     from '../utils/cookieUtils';
+
 @Component({
     // moduleId: module.id,
     selector: 'game-platform',
@@ -9,11 +11,12 @@ export class PlatformComponent implements OnInit {
     public count: number;
     public gameActive: boolean;
 
-    // constructor() {
-    // }
+    constructor(private cookie: CookieUtils) {
+
+    }
 
     public ngOnInit(): void {
-        this.count = 8;
+        this.count = this.cookie.get('memory-last-count') || 6;
         this.gameActive = false;
     }
 

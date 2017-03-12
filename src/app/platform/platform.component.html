@@ -3,10 +3,12 @@
     <game-setting
         (onSetCount)="changeCount($event)"
         (onSetGameActive)="setGameActive($event)"
+        *ngIf = "!gameActive"
         [count]="count"></game-setting>
     <game-main
         (onSetCount)="changeCount($event)"
         (onSetGameActive)="setGameActive($event)"
+        *ngIf = "gameActive"
         [count]="count"
         [gameActive]="gameActive"></game-main>
 </div>

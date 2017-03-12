@@ -29,6 +29,7 @@ export class SettingComponent implements OnInit, OnChanges {
     @Input() public count: number;
     public settingState = 'inactive';
     public disabledBtn = {};
+    public keyboardType: string;
     private _countInput: number;
 
     public inputCount(value: number) {
@@ -44,7 +45,9 @@ export class SettingComponent implements OnInit, OnChanges {
         } else if (value == 99) {
             // 开始 Game
             this.settingState = 'inactive';
-            this.onSetGameActive.emit(true);
+            setTimeout(() => {
+                this.onSetGameActive.emit(true);
+            }, 300);
             return;
         } else {
             this._countInput = this.count * 10 + value;
@@ -58,6 +61,7 @@ export class SettingComponent implements OnInit, OnChanges {
     // }
 
     public ngOnInit(): void {
+        this.keyboardType = 'setting';
         setTimeout(() => {
             this.settingState = 'active';
         }, 300);

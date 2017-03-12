@@ -3,6 +3,7 @@
     /*padding: 1rem;*/
     /*margin: 1rem auto;*/
 }
+
 .breadcrumb {
     margin-top: 1.5rem;
     margin-bottom: 0.5rem;
@@ -11,25 +12,150 @@
 #platform-container {
     max-width: 530px;
 }
+
 main .container {
     max-width: 500px;
 }
-.keyboard .container {
-    max-width: 100%;
+
+#platform-setting {
+    padding-top: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
 }
-.keyboard .row {
+
+#setting-container {
+    /*display: inline-block;*/
+}
+
+#game-main-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+#ready-layer {
+    font-size: 24px;
+    margin-top: 0px;
+    /*width: 0;*/
+    height: 0;
+    /*overflow: hidden;*/
+    opacity: 0;
+    transition: all 300ms ease-in-out;
+}
+#ready-layer.active {
+    margin-top: 80px;
+    /*width: auto;*/
+    height: auto;
+    overflow: visible;
+    opacity: 1;
+}
+
+#number-pool-container {
+    /*padding: 15px 8px;*/
+    position: absolute;
+    top: 15px;
+    left: 23px;
+    right: 23px;
+    bottom: 280px;
+    transition: bottom 300ms ease-in-out;
+}
+#number-pool-container.full {
+    bottom: 70px;
+}
+
+#number-pool-container .panel {
+    width: 100%;
+    height: 100%;
     margin: 0;
 }
 
-#platform-setting {
-    margin-top: 40px;
-    /*background-color: #c1dbe2;*/
-    /*-webkit-border-radius: 5px;*/
-    /*-moz-border-radius: 5px;*/
-    /*border-radius: 5px;*/
+#number-pool-container .btn.number-item {
+    margin: 4px;
+    width: 30px;
+    height: 40px;
+    padding: 0;
+    font-size: 20px;
 }
-#setting-container {
-    /*display: inline-block;*/
+
+#cur-number-main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, .85);
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+    z-index: 10;
+}
+
+#cur-number-main.active {
+    width: auto;
+    height: auto;
+    right: 0;
+    bottom: 0;
+    opacity: 1;
+}
+
+#cur-number {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -100px;
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    font-size: 200px;
+    text-align: center;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 300ms ease-in;
+}
+
+#cur-number.active {
+    opacity: 1;
+}
+
+#game-buttons {
+    position: absolute;
+    bottom: 17px;
+    left: 0;
+    right: 0;
+}
+#game-buttons .row {
+    width: 300px;
+    margin: 0 auto;
+}
+
+/* -------------------------  keyboard ------------------------ */
+#keyboard-game {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: 0;
+}
+
+.keyboard {
+    max-width: 250px;
+    margin: 0 auto;
+}
+
+.keyboard .container {
+    max-width: 100%;
+}
+
+.keyboard .row {
+    margin: 0;
 }
 
 .keyboard .col-xs-4 {
@@ -40,6 +166,7 @@ main .container {
     margin: 10px auto;
     width: 100%;
 }
+
 .keyboard .btn:focus {
     outline: none;
 }

@@ -26,6 +26,7 @@ import {
 export class KeyboardComponent implements OnInit, OnChanges {
     @Output() public onKeyDown = new EventEmitter();
     @Input() public disabledBtn: any;
+    @Input() public keyboardType: string;
     // public settingState = 'inactive';
     public keyList = [
         [
@@ -44,10 +45,14 @@ export class KeyboardComponent implements OnInit, OnChanges {
             {value: 9, text: '9'}
         ],
         [
+            {value: -111, text: '上一个', icon:'arrow-left', style: 'btn-default'},
             {value: 99, text: '开始', style: 'btn-primary'},
-            {value: 9999, text: '完成', style: 'btn-primary', hidden: true},
             {value: 0, text: '0'},
-            {value: -1, text: '删除', style: 'btn-warning'}
+            {value: -1, text: '删除', style: 'btn-warning'},
+            {value: 111, text: '下一个', icon:'arrow-right', style: 'btn-default'},
+        ],
+        [
+            {value: 9999, text: '完成', style: 'btn-primary'}
         ]
     ];
     private keyMap = {};
@@ -63,9 +68,11 @@ export class KeyboardComponent implements OnInit, OnChanges {
     // 开始：99
     // 删除：-1
     // 完毕：9999
+    // 上一个：-111
+    // 下一个：111
     // 其它：0-9
     public inputCount(btn: any) {
-        if (btn.disabled) {
+        if (btn.disabled || btn.isSpace) {
             return;
         }
         this.onKeyDown.emit(btn.value);
@@ -78,10 +85,22 @@ export class KeyboardComponent implements OnInit, OnChanges {
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
-        if (changes['disabledBtn'].currentValue) {
+        if (changes['disabledBtn']) {
             let btn = changes['disabledBtn'].currentValue;
             if (this.keyMap[btn.value]) {
-                this.keyMap[btn.value].disabled = btn.disabled;
+                this.keyMap[btn.value].disabled = !!btn.disabled;
+                this.keyMap[btn.value].hidden = !!btn.hidden;
+            }
+        }
+        if (changes['keyboardType']) {
+            let type = changes['keyboardType'].currentValue;
+            if (type === 'setting') {
+                this.keyMap[-111].hidden = true;
+                this.keyMap[111].hidden = true;
+                this.keyMap[9999].hidden = true;
+            } else if (type === 'game') {
+                this.keyMap[99].hidden = true;
+                this.keyMap[-1].hidden = true;
             }
         }
     }

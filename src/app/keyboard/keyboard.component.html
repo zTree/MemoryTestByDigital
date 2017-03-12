@@ -1,11 +1,19 @@
 <div class="keyboard">
     <div class="row" *ngFor="let keyRow of keyList">
-        <div *ngFor="let key of keyRow">
-            <div class="col-xs-4" *ngIf="!key.hidden">
+        <div *ngFor="let key of keyRow; let i = index">
+            <div class="col-xs-4"
+                 [ngClass]="{'col-xs-4': keyRow.length > 1,
+                    'col-xs-12': keyRow.length === 1}"
+                 *ngIf="!key.hidden">
                 <button type="button"
                         class="btn {{key.style || 'btn-success'}}"
                         [ngClass] = "{'disabled': key.disabled}"
-                        (click)="inputCount(key)">{{key.text}}</button>
+                        (click)="inputCount(key)">
+                    <!--<span class="glyphicon glyphicon-{{key.icon}}" aria-hidden="true"-->
+                          <!--*ngIf="key.icon"-->
+                    <!--&gt;</span>-->
+                    {{key.text}}
+                </button>
             </div>
         </div>
     </div>
