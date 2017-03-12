@@ -16,7 +16,7 @@ export class PlatformComponent implements OnInit {
     }
 
     public ngOnInit(): void {
-        this.count = this.cookie.get('memory-last-count') || 6;
+        this.count = parseInt(this.cookie.get('memory-last-count'), 10) || 6;
         this.gameActive = false;
     }
 
