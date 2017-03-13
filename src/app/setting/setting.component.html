@@ -7,11 +7,26 @@
             <form class="" (submit)="init()">
                 <fieldset>
                     <div id="setting-container">
-                        <p class="help-block text-left">
-                            <span>输入你能记住的数字个数，然后 开始</span>
-                            <span class="bg-danger text-danger">（1-999）</span></p>
-                        <div class="form-group text-center {{count === 0 ? 'text-danger': 'text-info'}}">
-                            <p id="setting-tip">先来 <span>{{count}}</span> 个</p>
+                        <div class="form-group text-center">
+                            <div id="setting-hard-level" class="help-block">
+                                <div class="btn-group" role="group" >
+                                    <button type="button"
+                                            class="btn {{hardLevel === 1 ? 'btn-info' : 'btn-default'}}"
+                                            (click)="onSetHardLevel.emit(1);">简单</button>
+                                    <button type="button"
+                                            class="btn {{hardLevel === 2 ? 'btn-info' : 'btn-default'}}"
+                                            (click)="onSetHardLevel.emit(2);">正常</button>
+                                    <button type="button"
+                                            class="btn {{hardLevel === 3 ? 'btn-info' : 'btn-default'}}"
+                                            (click)="onSetHardLevel.emit(3);">困难</button>
+                                </div>
+                            </div>
+                            <div class="help-block">
+                                挑战个数（<span class="bg-danger text-danger">1-999</span>）：
+                                <span id="setting-count"
+                                      class="text-center {{count === 0 ? 'bg-danger text-danger': 'bg-info text-info'}}">{{count}}</span>
+
+                            </div>
                         </div>
 
                         <div class="form-group text-center">

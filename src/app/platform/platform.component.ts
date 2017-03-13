@@ -9,6 +9,7 @@ import { CookieUtils }     from '../utils/cookieUtils';
 })
 export class PlatformComponent implements OnInit {
     public count: number;
+    public hardLevel: number;
     public gameActive: boolean;
 
     constructor(private cookie: CookieUtils) {
@@ -17,6 +18,7 @@ export class PlatformComponent implements OnInit {
 
     public ngOnInit(): void {
         this.count = parseInt(this.cookie.get('memory-last-count'), 10) || 6;
+        this.hardLevel = parseInt(this.cookie.get('memory-last-hard-level'), 10) || 2;
         this.gameActive = false;
     }
 
@@ -36,6 +38,14 @@ export class PlatformComponent implements OnInit {
         }
 
         this.count = count;
+    }
+
+    public changeHardLevel(hardLevel: number): void {
+        if (hardLevel === this.hardLevel) {
+            return;
+        }
+
+        this.hardLevel = hardLevel;
     }
 
     public setGameActive(active) {

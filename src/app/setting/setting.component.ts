@@ -25,8 +25,10 @@ import {
 })
 export class SettingComponent implements OnInit, OnChanges {
     @Output() public onSetCount = new EventEmitter();
+    @Output() public onSetHardLevel = new EventEmitter();
     @Output() public onSetGameActive = new EventEmitter();
     @Input() public count: number;
+    @Input() public hardLevel: number;
     public settingState = 'inactive';
     public disabledBtn = {};
     public keyboardType: string;

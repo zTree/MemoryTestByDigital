@@ -1,5 +1,5 @@
 import {
-    Component,
+    Component, ViewChild, ElementRef,
     OnChanges, SimpleChanges, Input, Output, EventEmitter,
     animate, style, state, transition, trigger
 } from '@angular/core';
@@ -33,7 +33,9 @@ export class GameComponent implements OnChanges {
     @Output() public onSetCount = new EventEmitter();
     @Output() public onSetGameActive = new EventEmitter();
     @Input() public count: number;
+    @Input() public hardLevel: number;
     @Input() public gameActive: boolean;
+    @ViewChild('questionPoolBody') public questionPoolBodyElement: ElementRef;
     public gameMainState = 'inactive';
     public GAMESTATE = {
         BACKGROUND: 'background',
@@ -50,6 +52,7 @@ export class GameComponent implements OnChanges {
     public curInputIndex: number;
     public keyboardType: string;
     public score: number;
+    private showNumberTimer = [[1500, 2500], [500, 1500], [300, 1000]];
 
     constructor(private cookie: CookieUtils) {
         this.gameState = this.GAMESTATE.BACKGROUND;
@@ -103,6 +106,13 @@ export class GameComponent implements OnChanges {
             }
             this.questionPool[index].active = true;
             this.curInputIndex = index;
+
+            setTimeout(() => {
+                let btn = this.questionPoolBodyElement.nativeElement.querySelector('.btn-info');
+                if (btn) {
+                    btn.focus();
+                }
+            }, 100);
             return;
         }
 
@@ -135,7 +145,10 @@ export class GameComponent implements OnChanges {
     }
 
     private readyGame(): void {
-        this.cookie.put('memory-last-count', this.count.toString(), this.cookie.getOptions(365));
+        this.cookie.put('memory-last-count',
+            this.count.toString(), this.cookie.getOptions(365));
+        this.cookie.put('memory-last-hard-level',
+            this.hardLevel.toString(), this.cookie.getOptions(365));
         this.gameMainState = 'active';
         this.gameState = this.GAMESTATE.READY;
         this.keyboardType = 'game';
@@ -173,10 +186,10 @@ export class GameComponent implements OnChanges {
         // console.log(this.questionPool);
         setTimeout(() => {
             this.curNumberActive = false;
-        }, 500);
+        }, this.showNumberTimer[this.hardLevel - 1][0]);
         setTimeout(() => {
             this.createNext();
-        }, 1500);
+        }, this.showNumberTimer[this.hardLevel - 1][1]);
     }
 
     private waitAnswer(): void {

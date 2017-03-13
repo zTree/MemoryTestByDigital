@@ -2,13 +2,16 @@
     <!--<game-setting (onChangeCount)="changeCount($event)"></game-setting>-->
     <game-setting
         (onSetCount)="changeCount($event)"
+        (onSetHardLevel)="changeHardLevel($event)"
         (onSetGameActive)="setGameActive($event)"
         *ngIf = "!gameActive"
-        [count]="count"></game-setting>
+        [count]="count"
+        [hardLevel]="hardLevel"></game-setting>
     <game-main
         (onSetCount)="changeCount($event)"
         (onSetGameActive)="setGameActive($event)"
         *ngIf = "gameActive"
         [count]="count"
+        [hardLevel]="hardLevel"
         [gameActive]="gameActive"></game-main>
 </div>

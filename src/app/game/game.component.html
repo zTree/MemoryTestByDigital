@@ -25,10 +25,9 @@
                     *ngIf="gameState===GAMESTATE.END && score >=60 && score < 100">这就到达你的上限了？...</h3>
                 <h3 class="panel-title"
                     *ngIf="gameState===GAMESTATE.END && score < 60">亲，你的脑神经已经紊乱...</h3>
-                <h6 class="text-danger" *ngIf="gameState===GAMESTATE.END">点击错误数字，可查看正确答案</h6>
             </div>
-            <div class="panel-body">
-
+            <div #questionPoolBody class="panel-body">
+                <h6 class="text-danger" *ngIf="gameState===GAMESTATE.END && score < 100">点击错误数字，可查看正确答案</h6>
                 <button type="button" class="btn btn-default number-item"
                         onfocus="this.blur();"
                         *ngFor="let question of questionPool; let i = index"
@@ -70,7 +69,7 @@
                 </button>
                 <button type="button" class="btn btn-danger"
                         *ngIf="score<100 && count < 4"
-                        (click)="setCount(0)">要脸不？
+                        (click)="setCount(0)">重新来过
                 </button>
             </div>
             <div class="col-xs-6 text-center">
