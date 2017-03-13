@@ -21,7 +21,7 @@ export class PlatformComponent implements OnInit {
     }
 
     public changeCount(count: number): void {
-        console.log('platform -- ' + this.count + ' => ' + count);
+        // console.log('platform -- ' + this.count + ' => ' + count);
         if (count === this.count) {
             return;
         }

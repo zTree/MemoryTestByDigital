@@ -1,5 +1,5 @@
 import {
-    Component, OnInit,
+    Component,
     OnChanges, SimpleChanges, Input, Output, EventEmitter,
     animate, style, state, transition, trigger
 } from '@angular/core';
@@ -29,7 +29,7 @@ import { CookieUtils }     from '../utils/cookieUtils';
         ]),
     ],
 })
-export class GameComponent implements OnInit, OnChanges {
+export class GameComponent implements OnChanges {
     @Output() public onSetCount = new EventEmitter();
     @Output() public onSetGameActive = new EventEmitter();
     @Input() public count: number;
@@ -58,9 +58,6 @@ export class GameComponent implements OnInit, OnChanges {
         this.score = 0;
     }
 
-    public ngOnInit(): void {
-    }
-
     public ngOnChanges(changes: SimpleChanges): void {
         if (changes['gameActive']) {
             if (this.gameActive) {
@@ -69,74 +66,6 @@ export class GameComponent implements OnInit, OnChanges {
                 this.stopGame();
             }
         }
-    }
-
-    public init(): void {
-        this.gameMainState = 'inactive';
-    }
-    private readyGame(): void {
-        this.cookie.put('memory-last-count', this.count.toString(), this.cookie.getOptions(365));
-        this.gameMainState = 'active';
-        this.gameState = this.GAMESTATE.READY;
-        this.keyboardType = 'game';
-        this.questionPool = [];
-        this.curInputIndex = -1;
-        setTimeout(() => {
-            this.gameState = this.GAMESTATE.SHOWING;
-        }, 3000);
-        setTimeout(() => {
-            this.startGame();
-        }, 4000);
-    }
-    private startGame(): void {
-        this.createNext();
-    }
-
-    private stopGame(): void {
-        this.gameState = this.GAMESTATE.BACKGROUND;
-    }
-
-    private createNext(): void {
-        if (this.questionPool.length >= this.count) {
-            this.waitAnswer();
-            return;
-        }
-        this.curNumber = this.getNextNumber();
-        this.curNumberActive = true;
-        this.questionPool.push({
-            value: this.curNumber,
-            answer: '',
-            active: false,
-            right: null
-        });
-        console.log(this.questionPool);
-        setTimeout(() => {
-            this.curNumberActive = false;
-        }, 500);
-        setTimeout(() => {
-            this.createNext();
-        }, 1500);
-    }
-
-    private waitAnswer(): void {
-        this.gameState = this.GAMESTATE.WAITING;
-        this.setCurIndex(0);
-
-    }
-
-    private submitAnswer(): void {
-        this.gameState = this.GAMESTATE.END;
-        this.questionPool[this.curInputIndex].active = false;
-
-        let rightCount = 0;
-        for (let question of this.questionPool) {
-            question.right = (question.value === question.answer);
-            if (question.right) {
-                rightCount++;
-            }
-        }
-        this.score = Math.floor(rightCount * 100 / this.questionPool.length);
-
     }
 
     public inputCount(value: number) {
@@ -166,7 +95,7 @@ export class GameComponent implements OnInit, OnChanges {
 
     public setCurIndex(index: number) {
         if (this.gameState === this.GAMESTATE.WAITING &&
-            index != this.curInputIndex) {
+            index !== this.curInputIndex) {
             // 输入状态
             let lastInput = this.questionPool[this.curInputIndex];
             if (lastInput) {
@@ -178,13 +107,14 @@ export class GameComponent implements OnInit, OnChanges {
         }
 
         if (this.gameState === this.GAMESTATE.END) {
+            // 错题的正确答案显示
             let question = this.questionPool[index];
-            if (!question.right) {
+            if (!question.right && question.answer !== question.value) {
                 let answer = question.answer;
                 question.answer = question.value;
-                setTimeout(()=>{
+                setTimeout(() => {
                     question.answer = answer;
-                }, 1000)
+                }, 1000);
             }
         }
     }
@@ -198,6 +128,75 @@ export class GameComponent implements OnInit, OnChanges {
 
     public goSetting() {
         this.onSetGameActive.emit(false);
+    }
+
+    public init(): void {
+        this.gameMainState = 'inactive';
+    }
+
+    private readyGame(): void {
+        this.cookie.put('memory-last-count', this.count.toString(), this.cookie.getOptions(365));
+        this.gameMainState = 'active';
+        this.gameState = this.GAMESTATE.READY;
+        this.keyboardType = 'game';
+        this.questionPool = [];
+        this.curInputIndex = -1;
+        setTimeout(() => {
+            this.gameState = this.GAMESTATE.SHOWING;
+        }, 3000);
+        setTimeout(() => {
+            this.startGame();
+        }, 4000);
+    }
+
+    private startGame(): void {
+        this.createNext();
+    }
+
+    private stopGame(): void {
+        this.gameState = this.GAMESTATE.BACKGROUND;
+    }
+
+    private createNext(): void {
+        if (this.questionPool.length >= this.count) {
+            this.waitAnswer();
+            return;
+        }
+        this.curNumber = this.getNextNumber();
+        this.curNumberActive = true;
+        this.questionPool.push({
+            value: this.curNumber,
+            answer: '',
+            active: false,
+            right: null
+        });
+        // console.log(this.questionPool);
+        setTimeout(() => {
+            this.curNumberActive = false;
+        }, 500);
+        setTimeout(() => {
+            this.createNext();
+        }, 1500);
+    }
+
+    private waitAnswer(): void {
+        this.gameState = this.GAMESTATE.WAITING;
+        this.setCurIndex(0);
+
+    }
+
+    private submitAnswer(): void {
+        this.gameState = this.GAMESTATE.END;
+        this.questionPool[this.curInputIndex].active = false;
+
+        let rightCount = 0;
+        for (let question of this.questionPool) {
+            question.right = (question.value === question.answer);
+            if (question.right) {
+                rightCount++;
+            }
+        }
+        this.score = Math.floor(rightCount * 100 / this.questionPool.length);
     }
 
     private getNextNumber(): number {

@@ -20,21 +20,22 @@
                 <h3 class="panel-title"
                     *ngIf="gameState===GAMESTATE.SHOWING || gameState===GAMESTATE.WAITING">请依次填入数字：</h3>
                 <h3 class="panel-title"
-                    *ngIf="gameState===GAMESTATE.END && score === 100">恭喜你！全部正确！</h3>
+                    *ngIf="gameState===GAMESTATE.END && score === 100">恭喜你！完全正确！</h3>
                 <h3 class="panel-title"
                     *ngIf="gameState===GAMESTATE.END && score >=60 && score < 100">这就到达你的上限了？...</h3>
                 <h3 class="panel-title"
                     *ngIf="gameState===GAMESTATE.END && score < 60">亲，你的脑神经已经紊乱...</h3>
-
+                <h6 class="text-danger" *ngIf="gameState===GAMESTATE.END">点击错误数字，可查看正确答案</h6>
             </div>
             <div class="panel-body">
+
                 <button type="button" class="btn btn-default number-item"
                         onfocus="this.blur();"
                         *ngFor="let question of questionPool; let i = index"
-                        [ngClass]="{'btn-default': !question.active && question.right === null,
-                        'btn-info': question.active && question.right === null,
-                        'btn-success': question.right === true,
-                        'btn-danger': question.right === false
+                        [ngClass]="{'btn-default': gameState===GAMESTATE.WAITING && !question.active,
+                        'btn-info': gameState===GAMESTATE.WAITING && question.active,
+                        'btn-success': gameState===GAMESTATE.END && (question.right || question.value === question.answer),
+                        'btn-danger': gameState===GAMESTATE.END && (!question.right && question.value !== question.answer)
                         }"
                         (click)="setCurIndex(i)">{{question.answer}}
                 </button>
@@ -61,7 +62,7 @@
                 </button>
                 <button type="button" class="btn btn-warning"
                         *ngIf="score===100 && count === 999"
-                        (click)="setCount(0)">哥，再玩一次吧？
+                        (click)="setCount(0)">我的神啊，再玩一次吧？
                 </button>
                 <button type="button" class="btn btn-warning"
                         *ngIf="score<100 && count >= 4"

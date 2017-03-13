@@ -42,7 +42,7 @@ export class SettingComponent implements OnInit, OnChanges {
             this._countInput = Math.floor(this.count / 10);
             // } else if (this.count > 99) {
             //     this._countInput = (this.count % 100) * 10 + value;
-        } else if (value == 99) {
+        } else if (value === 99) {
             // 开始 Game
             this.settingState = 'inactive';
             setTimeout(() => {

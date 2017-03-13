@@ -45,11 +45,11 @@ export class KeyboardComponent implements OnInit, OnChanges {
             {value: 9, text: '9'}
         ],
         [
-            {value: -111, text: '上一个', icon:'arrow-left', style: 'btn-default'},
+            {value: -111, text: '上一个', icon: 'arrow-left', style: 'btn-default'},
             {value: 99, text: '开始', style: 'btn-primary'},
             {value: 0, text: '0'},
             {value: -1, text: '删除', style: 'btn-warning'},
-            {value: 111, text: '下一个', icon:'arrow-right', style: 'btn-default'},
+            {value: 111, text: '下一个', icon: 'arrow-right', style: 'btn-default'},
         ],
         [
             {value: 9999, text: '完成', style: 'btn-primary'}
