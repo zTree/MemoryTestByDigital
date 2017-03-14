@@ -37,13 +37,32 @@ export class GameComponent implements OnChanges {
     @Input() public gameActive: boolean;
     @ViewChild('questionPoolBody') public questionPoolBodyElement: ElementRef;
     public gameMainState = 'inactive';
-    public GAMESTATE = {
+    public GameState = {
         BACKGROUND: 'background',
         READY: 'ready',
         SHOWING: 'showing',
         WAITING: 'waiting',
         END: 'end'
     };
+    public GameInfo = [
+        {
+            score: 100,
+            infoList: ['恭喜你！完全正确！', '你太厉害了！', '你简直是无极限呀！']
+        },
+        {
+            score: 80,
+            infoList: ['精益求精需要不断练习', '就差一点儿...', '马虎了吧？', '有人在影响你么？']
+        },
+        {
+            score: 60,
+            infoList: ['刚及格...你要小心了', '这就到达你的上限了？...', '把电视关掉，不要分散注意力']
+        },
+        {
+            score: 0,
+            infoList: ['亲，你的脑神经已经紊乱...', '洗洗睡吧，你可能不适合这个', '累了就歇会儿，明天再来吧！']
+        }
+    ];
+
     // gameState: ready, showing, waiting, end
     public gameState: string;
     public questionPool: any[];
@@ -52,13 +71,15 @@ export class GameComponent implements OnChanges {
     public curInputIndex: number;
     public keyboardType: string;
     public score: number;
+    public scoreTxt: string;
     private showNumberTimer = [[1500, 2500], [500, 1500], [300, 1000]];
 
     constructor(private cookie: CookieUtils) {
-        this.gameState = this.GAMESTATE.BACKGROUND;
+        this.gameState = this.GameState.BACKGROUND;
         this.curNumberActive = false;
         this.curNumber = -1;
         this.score = 0;
+        this.scoreTxt = '';
     }
 
     public ngOnChanges(changes: SimpleChanges): void {
@@ -97,7 +118,7 @@ export class GameComponent implements OnChanges {
     }
 
     public setCurIndex(index: number) {
-        if (this.gameState === this.GAMESTATE.WAITING &&
+        if (this.gameState === this.GameState.WAITING &&
             index !== this.curInputIndex) {
             // 输入状态
             let lastInput = this.questionPool[this.curInputIndex];
@@ -116,7 +137,7 @@ export class GameComponent implements OnChanges {
             return;
         }
 
-        if (this.gameState === this.GAMESTATE.END) {
+        if (this.gameState === this.GameState.END) {
             // 错题的正确答案显示
             let question = this.questionPool[index];
             if (!question.right && question.answer !== question.value) {
@@ -150,12 +171,12 @@ export class GameComponent implements OnChanges {
         this.cookie.put('memory-last-hard-level',
             this.hardLevel.toString(), this.cookie.getOptions(365));
         this.gameMainState = 'active';
-        this.gameState = this.GAMESTATE.READY;
+        this.gameState = this.GameState.READY;
         this.keyboardType = 'game';
         this.questionPool = [];
         this.curInputIndex = -1;
         setTimeout(() => {
-            this.gameState = this.GAMESTATE.SHOWING;
+            this.gameState = this.GameState.SHOWING;
         }, 3000);
         setTimeout(() => {
             this.startGame();
@@ -167,7 +188,7 @@ export class GameComponent implements OnChanges {
     }
 
     private stopGame(): void {
-        this.gameState = this.GAMESTATE.BACKGROUND;
+        this.gameState = this.GameState.BACKGROUND;
     }
 
     private createNext(): void {
@@ -193,13 +214,13 @@ export class GameComponent implements OnChanges {
     }
 
     private waitAnswer(): void {
-        this.gameState = this.GAMESTATE.WAITING;
+        this.gameState = this.GameState.WAITING;
         this.setCurIndex(0);
 
     }
 
     private submitAnswer(): void {
-        this.gameState = this.GAMESTATE.END;
+        this.gameState = this.GameState.END;
         this.questionPool[this.curInputIndex].active = false;
 
         let rightCount = 0;
@@ -210,9 +231,19 @@ export class GameComponent implements OnChanges {
             }
         }
         this.score = Math.floor(rightCount * 100 / this.questionPool.length);
+        this.setScoreText();
     }
 
     private getNextNumber(): number {
         return parseInt(Array.from((Math.random() * new Date().valueOf()).toString()).pop(), 10);
+    }
+    private setScoreText(): void {
+        let random = Math.floor(Math.random() * new Date().valueOf());
+        for (let scoreLevel of this.GameInfo) {
+            if (this.score >= scoreLevel.score) {
+                this.scoreTxt = scoreLevel.infoList[random % scoreLevel.infoList.length];
+                break;
+            }
+        }
     }
 }

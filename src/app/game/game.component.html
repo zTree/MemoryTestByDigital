@@ -1,5 +1,5 @@
 <div class="game-main-layer" [@gameMainState]="gameMainState">
-    <div id="ready-layer" class="text-center" [ngClass]="{'active':gameState === GAMESTATE.READY}">
+    <div id="ready-layer" class="text-center" [ngClass]="{'active':gameState === GameState.READY}">
         <span>深呼吸...</span>
         <br>
         <br>
@@ -9,32 +9,27 @@
         <span>一定要记住哟！</span>
     </div>
     <div id="number-pool-container" class="clearfix"
-         [ngClass]="{'full': gameState===GAMESTATE.END}">
+         [ngClass]="{'full': gameState===GameState.END}">
         <div class="panel panel-info"
-             [ngClass]="{'panel-info':gameState===GAMESTATE.SHOWING || gameState===GAMESTATE.WAITING,
-             'panel-success':gameState===GAMESTATE.END && score === 100,
-             'panel-warning':gameState===GAMESTATE.END && score >=60 && score < 100,
-             'panel-danger':gameState===GAMESTATE.END && score <60}"
-             *ngIf="gameState!==GAMESTATE.READY && questionPool && questionPool.length > 0">
+             [ngClass]="{'panel-info':gameState===GameState.SHOWING || gameState===GameState.WAITING,
+             'panel-success':gameState===GameState.END && score === 100,
+             'panel-warning':gameState===GameState.END && score >=60 && score < 100,
+             'panel-danger':gameState===GameState.END && score <60}"
+             *ngIf="gameState!==GameState.READY && questionPool && questionPool.length > 0">
             <div class="panel-heading">
                 <h3 class="panel-title"
-                    *ngIf="gameState===GAMESTATE.SHOWING || gameState===GAMESTATE.WAITING">请依次填入数字：</h3>
-                <h3 class="panel-title"
-                    *ngIf="gameState===GAMESTATE.END && score === 100">恭喜你！完全正确！</h3>
-                <h3 class="panel-title"
-                    *ngIf="gameState===GAMESTATE.END && score >=60 && score < 100">这就到达你的上限了？...</h3>
-                <h3 class="panel-title"
-                    *ngIf="gameState===GAMESTATE.END && score < 60">亲，你的脑神经已经紊乱...</h3>
+                    *ngIf="gameState===GameState.SHOWING || gameState===GameState.WAITING">请依次填入数字：</h3>
+                <h3 class="panel-title" *ngIf="gameState===GameState.END" >{{scoreTxt}}</h3>
             </div>
             <div #questionPoolBody class="panel-body">
-                <h6 class="text-danger" *ngIf="gameState===GAMESTATE.END && score < 100">点击错误数字，可查看正确答案</h6>
+                <h6 class="text-danger" *ngIf="gameState===GameState.END && score < 100">点击错误数字，可查看正确答案</h6>
                 <button type="button" class="btn btn-default number-item"
                         onfocus="this.blur();"
                         *ngFor="let question of questionPool; let i = index"
-                        [ngClass]="{'btn-default': gameState===GAMESTATE.WAITING && !question.active,
-                        'btn-info': gameState===GAMESTATE.WAITING && question.active,
-                        'btn-success': gameState===GAMESTATE.END && (question.right || question.value === question.answer),
-                        'btn-danger': gameState===GAMESTATE.END && (!question.right && question.value !== question.answer)
+                        [ngClass]="{'btn-default': gameState===GameState.WAITING && !question.active,
+                        'btn-info': gameState===GameState.WAITING && question.active,
+                        'btn-success': gameState===GameState.END && (question.right || question.value === question.answer),
+                        'btn-danger': gameState===GameState.END && (!question.right && question.value !== question.answer)
                         }"
                         (click)="setCurIndex(i)">{{question.answer}}
                 </button>
@@ -42,17 +37,17 @@
         </div>
     </div>
     <div id="cur-number-main"
-         [ngClass]="{'active': gameState===GAMESTATE.SHOWING}">
+         [ngClass]="{'active': gameState===GameState.SHOWING}">
         <div id="cur-number" [ngClass]="{'active': curNumberActive}">
             <span>{{curNumber}}</span>
         </div>
     </div>
-    <div class="form-group text-center" *ngIf="gameState===GAMESTATE.WAITING">
+    <div class="form-group text-center" *ngIf="gameState===GameState.WAITING">
         <game-keyboard id="keyboard-game"
                        [keyboardType]="keyboardType"
                        (onKeyDown)="inputCount($event)"></game-keyboard>
     </div>
-    <div id="game-buttons" *ngIf="gameState===GAMESTATE.END">
+    <div id="game-buttons" *ngIf="gameState===GameState.END">
         <div class="row">
             <div class="col-xs-6 text-center">
                 <button type="button" class="btn btn-primary"
