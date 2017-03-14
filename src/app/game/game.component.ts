@@ -65,6 +65,7 @@ export class GameComponent implements OnChanges {
 
     // gameState: ready, showing, waiting, end
     public gameState: string;
+    public isbandon: boolean;
     public questionPool: any[];
     public curNumberActive: boolean;
     public curNumber: number;
@@ -76,6 +77,7 @@ export class GameComponent implements OnChanges {
 
     constructor(private cookie: CookieUtils) {
         this.gameState = this.GameState.BACKGROUND;
+        this.isbandon = false;
         this.curNumberActive = false;
         this.curNumber = -1;
         this.score = 0;
@@ -157,6 +159,12 @@ export class GameComponent implements OnChanges {
         }, 1000);
     }
 
+    public abandonGame() {
+        this.scoreTxt = '半途而废了....';
+        this.isbandon = true;
+        this.gameState = this.GameState.END;
+    }
+
     public goSetting() {
         this.onSetGameActive.emit(false);
     }
@@ -192,6 +200,9 @@ export class GameComponent implements OnChanges {
     }
 
     private createNext(): void {
+        if (this.gameState !== this.GameState.SHOWING) {
+            return;
+        }
         if (this.questionPool.length >= this.count) {
             this.waitAnswer();
             return;

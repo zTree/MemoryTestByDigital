@@ -153,6 +153,13 @@ main .container {
     opacity: 1;
 }
 
+#stop-game-btn {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+}
+
 #game-buttons {
     position: absolute;
     bottom: 17px;
