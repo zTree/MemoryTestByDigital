@@ -246,7 +246,8 @@ export class GameComponent implements OnChanges {
     }
 
     private getNextNumber(): number {
-        return parseInt(Array.from((Math.random() * new Date().valueOf()).toString()).pop(), 10);
+        var arr = Array.from(Math.floor(Math.random() * new Date().valueOf()).toString());
+        return parseInt(arr[arr.length - 2], 10);
     }
     private setScoreText(): void {
         let random = Math.floor(Math.random() * new Date().valueOf());
