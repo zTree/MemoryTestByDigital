@@ -180,6 +180,7 @@ export class GameComponent implements OnChanges {
             this.hardLevel.toString(), this.cookie.getOptions(365));
         this.gameMainState = 'active';
         this.gameState = this.GameState.READY;
+        this.isbandon = false;
         this.keyboardType = 'game';
         this.questionPool = [];
         this.curInputIndex = -1;
