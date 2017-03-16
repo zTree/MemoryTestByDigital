@@ -34,6 +34,7 @@ export class GameComponent implements OnChanges {
     @Output() public onSetGameActive = new EventEmitter();
     @Input() public count: number;
     @Input() public hardLevel: number;
+    @Input() public mediaState: number;
     @Input() public gameActive: boolean;
     @ViewChild('questionPoolBody') public questionPoolBodyElement: ElementRef;
     public gameMainState = 'inactive';
@@ -74,6 +75,7 @@ export class GameComponent implements OnChanges {
     public score: number;
     public scoreTxt: string;
     private showNumberTimer = [[1500, 2500], [500, 1500], [300, 1000]];
+    private numAudioArea = [0, 8.724, 7.794, 6.912, 5.928, 4.854, 3.630, 2.762, 1.902, 1];
 
     constructor(private cookie: CookieUtils) {
         this.gameState = this.GameState.BACKGROUND;
@@ -163,6 +165,10 @@ export class GameComponent implements OnChanges {
         this.scoreTxt = '半途而废了....';
         this.isbandon = true;
         this.gameState = this.GameState.END;
+        if (this.mediaState === 1) {
+            let audio = document.body.querySelector('audio');
+            audio.pause();
+        }
     }
 
     public goSetting() {
@@ -216,6 +222,7 @@ export class GameComponent implements OnChanges {
             active: false,
             right: null
         });
+        this.playNumAudio(this.curNumber);
         // console.log(this.questionPool);
         setTimeout(() => {
             this.curNumberActive = false;
@@ -247,9 +254,23 @@ export class GameComponent implements OnChanges {
     }
 
     private getNextNumber(): number {
-        var arr = Array.from(Math.floor(Math.random() * new Date().valueOf()).toString());
+        let arr = Array.from(Math.floor(Math.random() * new Date().valueOf()).toString());
         return parseInt(arr[arr.length - 2], 10);
     }
+
+    private playNumAudio(index) {
+        if (this.mediaState !== 1) {
+            return;
+        }
+        let audio = document.body.querySelector('audio');
+        audio.currentTime = this.numAudioArea[index];
+        audio.play();
+
+        setTimeout(() => {
+            audio.pause();
+        }, 800);
+    }
+
     private setScoreText(): void {
         let random = Math.floor(Math.random() * new Date().valueOf());
         for (let scoreLevel of this.GameInfo) {

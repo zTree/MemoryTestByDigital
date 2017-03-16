@@ -26,9 +26,11 @@ import {
 export class SettingComponent implements OnInit, OnChanges {
     @Output() public onSetCount = new EventEmitter();
     @Output() public onSetHardLevel = new EventEmitter();
+    @Output() public onSetMedia = new EventEmitter();
     @Output() public onSetGameActive = new EventEmitter();
     @Input() public count: number;
     @Input() public hardLevel: number;
+    @Input() public mediaState: number;
     public settingState = 'inactive';
     public disabledBtn = {};
     public keyboardType: string;
@@ -46,6 +48,13 @@ export class SettingComponent implements OnInit, OnChanges {
             //     this._countInput = (this.count % 100) * 10 + value;
         } else if (value === 99) {
             // 开始 Game
+            if (this.mediaState === 1) {
+                let audio = document.body.querySelector('audio');
+                audio.currentTime = 0;
+                audio.play();
+                audio.pause();
+            }
+
             this.settingState = 'inactive';
             setTimeout(() => {
                 this.onSetGameActive.emit(true);

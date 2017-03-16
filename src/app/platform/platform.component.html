@@ -3,15 +3,18 @@
     <game-setting
         (onSetCount)="changeCount($event)"
         (onSetHardLevel)="changeHardLevel($event)"
+        (onSetMedia)="changeMediaState($event)"
         (onSetGameActive)="setGameActive($event)"
         *ngIf = "!gameActive"
         [count]="count"
-        [hardLevel]="hardLevel"></game-setting>
+        [hardLevel]="hardLevel"
+        [mediaState]="mediaState"></game-setting>
     <game-main
         (onSetCount)="changeCount($event)"
         (onSetGameActive)="setGameActive($event)"
         *ngIf = "gameActive"
         [count]="count"
         [hardLevel]="hardLevel"
+        [mediaState]="mediaState"
         [gameActive]="gameActive"></game-main>
 </div>

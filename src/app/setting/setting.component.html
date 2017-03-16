@@ -21,6 +21,16 @@
                                             (click)="onSetHardLevel.emit(3);">困难</button>
                                 </div>
                             </div>
+                            <div id="setting-media" class="help-block">
+                                <div class="btn-group" role="group" >
+                                    <button type="button"
+                                            class="btn {{mediaState === 0 ? 'btn-info' : 'btn-default'}}"
+                                            (click)="onSetMedia.emit(0);">安静</button>
+                                    <button type="button"
+                                            class="btn {{mediaState === 1 ? 'btn-info' : 'btn-default'}}"
+                                            (click)="onSetMedia.emit(1);">语音</button>
+                                </div>
+                            </div>
                             <div class="help-block">
                                 挑战个数（<span class="bg-danger text-danger">1-999</span>）：
                                 <span id="setting-count"
