@@ -75,7 +75,8 @@ export class GameComponent implements OnChanges {
     public score: number;
     public scoreTxt: string;
     private showNumberTimer = [[1500, 2500], [500, 1500], [300, 1000]];
-    private numAudioArea = [0, 8.724, 7.794, 6.912, 5.928, 4.854, 3.630, 2.762, 1.902, 1];
+    private numAudioArea = [0.050, 1.850, 3.650, 5.430, 7.185,
+        8.910, 10.660, 12.340, 13.950, 15.620];
 
     constructor(private cookie: CookieUtils) {
         this.gameState = this.GameState.BACKGROUND;
@@ -184,6 +185,8 @@ export class GameComponent implements OnChanges {
             this.count.toString(), this.cookie.getOptions(365));
         this.cookie.put('memory-last-hard-level',
             this.hardLevel.toString(), this.cookie.getOptions(365));
+        this.cookie.put('memory-last-media-state',
+            this.mediaState.toString(), this.cookie.getOptions(365));
         this.gameMainState = 'active';
         this.gameState = this.GameState.READY;
         this.isbandon = false;
@@ -263,12 +266,13 @@ export class GameComponent implements OnChanges {
             return;
         }
         let audio = document.body.querySelector('audio');
+        // console.log(index + ', ' + this.numAudioArea[index]);
         audio.currentTime = this.numAudioArea[index];
         audio.play();
 
         setTimeout(() => {
             audio.pause();
-        }, 800);
+        }, 900);
     }
 
     private setScoreText(): void {

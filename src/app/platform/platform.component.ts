@@ -20,7 +20,7 @@ export class PlatformComponent implements OnInit {
     public ngOnInit(): void {
         this.count = parseInt(this.cookie.get('memory-last-count'), 10) || 6;
         this.hardLevel = parseInt(this.cookie.get('memory-last-hard-level'), 10) || 2;
-        this.mediaState = parseInt(this.cookie.get('memory-last-media-sate'), 10) || 0;
+        this.mediaState = parseInt(this.cookie.get('memory-last-media-state'), 10) || 0;
         this.gameActive = false;
     }
 
